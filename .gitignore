@@ -1,0 +1,15 @@
+# Ignore node_modules for both frontend and backend
+frontend/node_modules/
+backend/venv/
+
+# Ignore any compiled or build artifacts
+frontend/build/
+backend/build/
+
+# Ignore environment-specific files
+frontend/.env
+backend/.env
+
+# Ignore logs and other generated files
+frontend/logs/
+backend/logs/
