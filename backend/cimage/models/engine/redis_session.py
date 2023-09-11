@@ -58,6 +58,10 @@ class RedisClient:
         """Update the session data associated with the given ID"""
         redis_client = self.get_redis(self.app)
         redis_client.hmget(session_id, data)
+    def exists(self, key):
+        """Check if a key exists in Redis"""
+        redis_client = self.get_redis(self.app)
+        return redis_client.exists(key)
 
     def reload(self, key, ttl=3600):
         """

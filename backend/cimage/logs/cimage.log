@@ -1,0 +1,1 @@
+2023-09-11 22:47:38,462 - cimage.common.logger - ERROR - Error clearing session: 'RedisClient' object has no attribute 'exists'

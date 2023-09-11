@@ -77,16 +77,18 @@ def save_code():
         
         return jsonify({"error": "Internal Server Error"}), 500
 
-@api_bp.route("/clear", methods=["DELETE"])
+@api_bp.route("/reset", methods=["POST"])
 def clear_code():
     try:
         redis_client = api_bp.redis_client
 
-        # Check if the session key exists before deleting
-        session_key = redis_client.get("code")
+        if redis_client.get("code"):
+            redis_client.clear("code")
 
-        if redis_client.exists(session_key):
-            redis_client.clear(session_key)
+            sanitized_code = bleach.clean(PLACEHOLDER_CODE, tags=[], attributes={}, strip=True)
+            sanitized_code_bytes = sanitized_code.encode("utf-8")  # Encode as bytes
+            redis_client.set("code", sanitized_code_bytes)
+
             return jsonify({"message": "Session cleared successfully"}), 200
         else:
             return jsonify({"message": "Session does not exist"}), 404
