@@ -2,9 +2,11 @@
 frontend/node_modules/
 backend/venv/
 
+frontend/.pnp
+frontend/.pnp.js
+
 # Ignore any compiled or build artifacts
 frontend/build/
-backend/build/
 
 # Ignore environment-specific files
 frontend/.env
@@ -13,3 +15,20 @@ backend/.env
 # Ignore logs and other generated files
 frontend/logs/
 backend/logs/
+
+# testing
+frontend/coverage
+
+# production
+#frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
