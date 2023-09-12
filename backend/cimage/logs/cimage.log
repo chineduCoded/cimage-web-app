@@ -1,1 +1,6 @@
 2023-09-11 22:47:38,462 - cimage.common.logger - ERROR - Error clearing session: 'RedisClient' object has no attribute 'exists'
+2023-09-12 00:43:55,874 - cimage.common.logger - ERROR - Error capturing screenshot: cookies[0].value: expected string, got object
+2023-09-12 00:58:20,417 - cimage.common.logger - ERROR - Error capturing screenshot: WebKit encountered an internal error
+=========================== logs ===========================
+navigating to "http://localhost:5000/", waiting until "load"
+============================================================

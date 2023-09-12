@@ -1,0 +1,12 @@
+.code {
+    font-family: monospace;
+	box-shadow: #767676 0px 20px 30px -10px;
+	border-radius: 0.5em;
+	padding: 1em;
+	min-width: 32em;
+	max-width: 100%;
+	min-height: 12em;
+	text-align: left;
+	border: 1px solid #cecece;
+	margin: 1.4rem;
+}

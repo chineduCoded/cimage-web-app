@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """API Blueprint"""
+import base64
+import json
 from flask import jsonify, session, request, current_app
 from cimage.api.v1.views import api_bp
 import bleach
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import Python3Lexer
-from pygments.styles import get_all_styles
+from cimage.common.screenshot_from_url import take_screenshot_from_url
+
 
 
 PLACEHOLDER_CODE = "print('Hello, World!')"
@@ -43,7 +43,7 @@ def code():
     
     except Exception as e:
         current_app.logger.error(f"error: {str(e)}")
-        return jsonify({"error": f"error: {str(e)}"}), 500
+        return jsonify({"error": "Internal Server Error"}), 500
 
 
 
@@ -95,4 +95,41 @@ def clear_code():
 
     except Exception as e:
         current_app.logger.error(f"Error clearing session: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "Internal Server Error"}), 500
+
+@api_bp.route("/screenshot", methods=["GET"])
+def screenshot():
+    try:
+        session_cookie_name = current_app.config["SESSION_COOKIE_NAME"]
+
+        # Retrieve the cookie name
+        cookie_value = request.cookies.get(session_cookie_name)
+
+        # Initialize session_data with default values
+        session_data = {
+            "name": session_cookie_name,
+            "value": cookie_value if cookie_value else "",
+            "url": request.host_url,
+        }
+
+        # Check if the cookie value exists and is valid JSON
+        if cookie_value:
+            try:
+                parsed_data = json.loads(cookie_value)
+            except json.JSONDecodeError as json_error:
+                current_app.logger.error(f"Error decoding JSON in cookie: {str(json_error)}")
+                parsed_data = None
+                return jsonify({"error": "Internal Server Error"}), 500
+        
+        # Assuming 'take_screenshot_from_url' is a function that returns image bytes
+        target_url = request.host_url
+        image_bytes = take_screenshot_from_url(target_url, session_data)
+        
+        # Encode the image bytes as base64 for inclusion in the JSON response
+        image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+
+        return jsonify({"message": "Screenshot captured successfully", "image_b64": image_b64}), 200
+
+    except Exception as e:
+        current_app.logger.error(f"Error capturing screenshot: {str(e)}")
+        return jsonify({"error": "Internal Server Error"}), 500
