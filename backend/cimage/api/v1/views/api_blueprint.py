@@ -320,7 +320,7 @@ def copy_image_address(image_id):
         current_app.logger.error(f"Error downloading image: {str(e)}")
         return jsonify({'error': f'Internal Server Error: {str(e)}'}), 500
    
-@api_bp.route('/clear', methods=['DELETE'])
+@api_bp.route('/clear', methods=['POST'])
 def clear_all_images():
     try:
         redis_client = api_bp.redis_client
