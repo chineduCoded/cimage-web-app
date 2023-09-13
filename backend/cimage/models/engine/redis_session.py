@@ -46,18 +46,19 @@ class RedisClient:
         return redis_client.get(identifier)
 
     def delete(self, key):
-        """Delete session"""
-        session.pop(key, None)
+        """Delete an item from the session"""
+        redis_client = self.get_redis(self.app)
+        redis_client.delete(key)
 
     def clear(self, key):
         """Clear the entire session associated with key"""
-        redis_client = self.get_redis(self.app)
-        redis_client.delete(key)
+        for session_key in self.get_redis(self.app).keys(f"image:{key}"):
+            self.delete(session_key.decode("utf-8"))
 
     def update(self, session_id, data):
         """Update the session data associated with the given ID"""
         redis_client = self.get_redis(self.app)
-        redis_client.hmget(session_id, data)
+        redis_client.hmset(session_id, data)
     def exists(self, key):
         """Check if a key exists in Redis"""
         redis_client = self.get_redis(self.app)
@@ -65,7 +66,83 @@ class RedisClient:
 
     def reload(self, key, ttl=3600):
         """
-        Reloads (extends) the session ttl (time-to-live) in Redis for a specific session key.
+        Reloads (extends) the session TTL (time-to-live) in Redis for a specific session key.
         """
-        if key in session:
-            self.get_redis(self.app).expire(f"{session.sid}:{key}", ttl)
+        redis_client = self.get_redis(self.app)
+        session_key = f"{session.sid}:{key}"
+        
+        # Check if the session key exists in Redis
+        if redis_client.exists(session_key):
+            # Extend the TTL for the session key
+            redis_client.expire(session_key, ttl)
+
+    
+    def set_image(self, image_id, image_data):
+        """
+        Set an image in the session using the provided image_id.
+
+        Args:
+            image_id (str): The unique identifier for the image.
+            image_data (bytes): The image data to store.
+        """
+        session_key = f"image:{image_id}"
+        self.set(session_key, image_data)
+
+    def get_image(self, image_id):
+        """
+        Get an image from the session using the provided image_id.
+
+        Args:
+            image_id (str): The unique identifier for the image.
+
+        Returns:
+            bytes or None: The image data if found, or None if not found.
+        """
+        session_key = f"image:{image_id}"
+        return self.get(session_key)
+
+    def delete_image(self, image_id):
+        """
+        Delete an image from the session using the provided image_id.
+
+        Args:
+            image_id (str): The unique identifier for the image.
+        """
+        session_key = f"image:{image_id}"
+        self.delete(session_key)
+
+    def get_all_images(self):
+        """
+        Get all images stored in the session.
+
+        Returns:
+            dict: A dictionary containing image IDs as keys and image data as values.
+        """
+        image_data = {}
+        for key in self.get_redis(self.app).keys("image:*"):
+            image_id = key.decode("utf-8").split(":")[1]
+            image_data[image_id] = self.get(key)
+        return image_data
+
+    def copy_image_address(self, image_id):
+        """
+        Copy the address (session key) of an image using the provided image_id.
+
+        Args:
+            image_id (str): The unique identifier for the image.
+
+        Returns:
+            str: The session key (address) of the image.
+        """
+        return f"image:{image_id}"
+    
+    def clear_all_images(self):
+        """
+        Clear (delete) all images stored in the Redis session.
+        """
+        redis_keys = self.get_redis(self.app).keys("image:*")
+        if redis_keys:
+            for key in redis_keys:
+                self.delete(key.decode("utf-8"))
+        else:
+            raise ValueError("No images found in the session")
