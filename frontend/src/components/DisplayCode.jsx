@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
-
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/ext-language_tools";
-
+import Editor from "@monaco-editor/react";
 import "../pages/styles.css"
 
 
-const CodeEditor = ({ initialCode }) => {
-  const [code, setCode] = useState(initialCode);
-  const [typingTimer, setTypingTimer] = useState(null);
+const CodeEditor = ({ onChange, language, code, theme }) => {
+  const [value, setValue] = useState(code || "")
+  const [typingTimer, setTypingTimer] = useState(null)
 
   useEffect(() => {
     // Cleanup timer on unmount
@@ -34,15 +29,10 @@ const CodeEditor = ({ initialCode }) => {
 //     setTypingTimer(newTypingTimer);
 //   };
 
-  const onChange = (newValue) => {
-    console.log("change", newValue)
+  const handleEditorChange = (value) => {
+    setValue(value)
+    onChange("code", value)
   }
-
-  const saveCode = (newCode) => {
-    // Perform code saving logic here
-    // You can make an API request to save the code to your server
-    console.log('Code saved:', code);
-  };
 
 
   const calculateTypingTime = (numberOfWords, typingSpeed) => {
@@ -51,23 +41,16 @@ const CodeEditor = ({ initialCode }) => {
   };
 
   return (
-    <div>
-      <AceEditor
-        placeholder="Enter your code here"
-        mode="javascript"
-        theme="monokai"
-        name="blah2"
-        // onLoad={onLoad}
-        onChange={onChange}
-        fontSize={16}
-        showPrintMargin={true}
-        showGutter={false}
-        highlightActiveLine={true}
-        value={code}
-        setOptions={{
-            showLineNumbers: false,
-            tabSize: 2,
-        }}/>
+    <div className="container">
+      <Editor
+        height="50vh"
+        width={`100%`}
+        language={language || "python"}
+        value={value}
+        theme={theme}
+        defaultValue="// some comment"
+        onChange={handleEditorChange}
+        />
     </div>
   );
 };
