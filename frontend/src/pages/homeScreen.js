@@ -1,13 +1,17 @@
 import React from 'react'
-import TextArea from '../components/TextArea'
 import BelowBar from '../components/BelowBar'
 import "./styles.css"
+import CodeEditor from '../components/DisplayCode'
 
 const HomeScreen = () => {
+  const initialCode = `function greet(name) {
+    return "Hello, " + name + "!";
+  }`;
+  
   return (
     <main>
-        <section className='textarea'>
-            <TextArea />
+        <section className='textarea-wrapper'>
+            <CodeEditor initialCode={initialCode} />
         </section>
         <section className='bar'>
             <BelowBar />
