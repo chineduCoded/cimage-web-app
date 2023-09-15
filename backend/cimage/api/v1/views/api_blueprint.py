@@ -10,7 +10,6 @@ from cimage.api.v1.views import api_bp
 import bleach
 from cimage.common.capture_screenshoot_url import capture_screenshot_of_url
 from cimage.common.generate_unique_session_id import generate_unique_session_id
-from cimage.common.get_file_type import get_file_type
 
 
 
