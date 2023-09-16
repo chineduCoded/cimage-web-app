@@ -52,3 +52,43 @@ textarea {
 	margin-block-end: 50px;
 }
 
+/* Action bar below */
+.bar {
+	width: 800px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	border: 1px solig gray;
+	border-radius: 5px;
+}
+
+.common {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	font-size: 14px;
+}
+
+.common h4 {
+	color: teal;
+}
+
+/* .select-theme {} */
+/* .toggle-background {} */
+/* .toggle-dark {} */
+/* .change-padding {} */
+
+.padding-btn {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+/* .select-language {} */
+
+.export-screenshot {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}

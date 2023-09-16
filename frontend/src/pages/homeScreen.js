@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import CodeEditor from '../components/DisplayCode'
 import { languageOptions } from "../constants/languageOtions"
 import { defineTheme } from '../lib/defineTheme'
-import "./styles.css"
 import ThemeDropdown from '../components/ThemeDropdown'
 import LanguagesDropdown from '../components/LanguageDropdown'
+import "./styles.css"
+import Switcher from '../components/Switcher'
 
 const initialCode = `function greet(name) {
   return "Hello, " + name + "!";
@@ -14,6 +15,7 @@ const HomeScreen = () => {
   const [code, setCode] = useState(initialCode)
   const [theme, setTheme] = useState("cobalt")
   const [language, setLanguage] = useState(languageOptions[0])
+  const [isToggled, setIsToggled] = useState(true)
 
   const onSelectChange = (sl) => {
     console.log("selected Option...", sl);
@@ -60,11 +62,36 @@ const HomeScreen = () => {
             />
         </section>
         <section className='bar'>
-            <div>
+            <div className='select-theme common'>
+              <h4>Theme</h4>
              <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
             </div>
-            <div>
+            <div className='toggle-background common'>
+              <h4>Background</h4>
+              <Switcher
+              rounded={true}
+              isToggled={isToggled}
+              onToggled={() => setIsToggled(!isToggled)} />
+            </div>
+            <div className='toggle-dark common'>
+              <h4>Dark Mode</h4>
+              <button>Toggle</button>
+            </div>
+            <div className='change-padding common'>
+              <h4>Padding</h4>
+              <div className='padding-btn'>
+                <button>16</button>
+                <button>32</button>
+                <button>64</button>
+                <button>128</button>
+              </div>
+            </div>
+            <div className='select-language common'>
+              <h4>language</h4>
               <LanguagesDropdown onSelectChange={onSelectChange} />
+            </div>
+            <div className='export-screenshot'>
+              <button>Export</button><button>up</button>
             </div>
         </section>
     </main>
