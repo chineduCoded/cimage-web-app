@@ -1,7 +1,10 @@
 /* CodeEditor Component */
 .container {
-	width: 520px;
+	min-width: 520px;
 	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .overlay {
@@ -48,6 +51,13 @@ textarea {
 }
 
 /* Home screen */
+.home-wrapper {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+}
+
 .textarea-wrapper {
 	margin-block-end: 50px;
 }

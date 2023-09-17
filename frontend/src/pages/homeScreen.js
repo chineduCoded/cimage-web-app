@@ -6,16 +6,40 @@ import ThemeDropdown from '../components/ThemeDropdown'
 import LanguagesDropdown from '../components/LanguageDropdown'
 import "./styles.css"
 import Switcher from '../components/Switcher'
+import axios from 'axios'
+import DownloadButton from '../components/DownloadButton'
 
-const initialCode = `function greet(name) {
-  return "Hello, " + name + "!";
-}`;
 
 const HomeScreen = () => {
-  const [code, setCode] = useState(initialCode)
+  const [code, setCode] = useState("")
   const [theme, setTheme] = useState("cobalt")
   const [language, setLanguage] = useState(languageOptions[0])
   const [isToggled, setIsToggled] = useState(true)
+  const [error, setError] = useState(null);
+  const [downloadUrl, setDownloadUrl] = useState('');
+
+  const baseURL = "http://localhost:5000"
+
+
+  useEffect(() => {
+    const cancelToken = axios.CancelToken.source()
+    axios.get(`${baseURL}/api/v1`, {cancelToken: cancelToken.token})
+      .then(res => {
+        setCode(res.data)
+        console.log(res.data)
+      })
+      .catch(err => {
+        if (axios.isCancel(err)) {
+          console.log("Cancelled!")
+        } else {
+          console.error("Could not fetch code data", err)
+        }
+      })
+
+      return () => {
+        cancelToken.cancel()
+      }
+  }, [])
 
   const onSelectChange = (sl) => {
     console.log("selected Option...", sl);
@@ -51,8 +75,9 @@ const HomeScreen = () => {
     );
   }, []);
   
+
   return (
-    <main>
+    <main className='home-wrapper'>
         <section className='textarea-wrapper'>
             <CodeEditor
               code={code}
@@ -75,7 +100,10 @@ const HomeScreen = () => {
             </div>
             <div className='toggle-dark common'>
               <h4>Dark Mode</h4>
-              <button>Toggle</button>
+              <Switcher
+              rounded={true}
+              isToggled={isToggled}
+              onToggled={() => setIsToggled(!isToggled)} />
             </div>
             <div className='change-padding common'>
               <h4>Padding</h4>
@@ -91,7 +119,8 @@ const HomeScreen = () => {
               <LanguagesDropdown onSelectChange={onSelectChange} />
             </div>
             <div className='export-screenshot'>
-              <button>Export</button><button>up</button>
+                <DownloadButton />
+              <button>up</button>
             </div>
         </section>
     </main>

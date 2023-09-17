@@ -116,10 +116,10 @@ def capture_screenshot():
         redis_client = api_bp.redis_client
 
         # Get the URL to capture from the request
-        url = request.host_url
+        url = request.args.get('url')
         
         # Get the page locator from the request
-        page_locator = request.form.get('locator')
+        page_locator = request.args.get('locator')
 
         # Check if URL is provided
         if not url:
@@ -180,14 +180,23 @@ def download_image(image_id):
 
 @api_bp.route('/screenshot/download', methods=['GET'])
 def capture_and_download_screenshot():
+    """
+    Capture and download a screenshot of a given URL.
+
+    :return:
+        If successful, returns the screenshot as a downloadable file with 
+        the image ID and download URL in the response JSON.
+        If there is an error, returns an error response with 
+        the appropriate status code and error message.
+    """
     try:
         redis_client = api_bp.redis_client
 
         # Get the URL to capture from the request
-        url = request.host_url
+        url = request.args.get('url')
         
         # Get the page locator from the request
-        page_locator = request.form.get('locator')
+        page_locator = request.args.get('selector')
 
         # Check if URL is provided
         if not url:
@@ -211,8 +220,10 @@ def capture_and_download_screenshot():
         # Create a BytesIO stream from the image data
         image_stream = BytesIO(screenshot_bytes)
 
-        # Return the image as a downloadable file
-        return send_file(image_stream, mimetype='image/png', as_attachment=True, download_name=f'cimage_{image_id}.png')
+        # Set the 'content-disposition' header to specify the filename
+        filename = f'cimage_{image_id}.png'
+       
+        return  send_file(image_stream, mimetype='image/png', as_attachment=True, download_name=filename)
 
     except Exception as e:
         current_app.logger.error(f"Error downloading image: {str(e)}")

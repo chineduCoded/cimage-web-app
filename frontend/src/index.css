@@ -9,8 +9,8 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Poppins, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #512222;
-  color: #fff;
+  /* background-color: #512222; */
+  /* color: #fff; */
 }
 
 code {

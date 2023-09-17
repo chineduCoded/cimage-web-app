@@ -16,9 +16,9 @@ def create_app():
     app.config.from_object(Config)
 
     # Initialize extensions
-    cors.init_app(app, resources={
+    cors = CORS(app, resources={
         r"/*": {
-            "origin": "http://localhost"
+            "origins": "http://localhost:3000",
         }
     })
     Session(app)
