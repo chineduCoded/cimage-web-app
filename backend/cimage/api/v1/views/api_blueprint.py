@@ -119,7 +119,7 @@ def capture_screenshot():
         url = request.args.get('url')
         
         # Get the page locator from the request
-        page_locator = request.args.get('locator')
+        page_locator = request.args.get('selector')
 
         # Check if URL is provided
         if not url:

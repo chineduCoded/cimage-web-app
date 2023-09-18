@@ -7,7 +7,7 @@ async def capture_screenshot_of_url(url, selector=None, width=1024, height=768):
         browser = await p.chromium.launch()
         context = await browser.new_context(device_scale_factor=1)  # Set the device scale factor as needed
         page = await context.new_page()
-        
+
         try:
             # Set the viewport size
             await page.set_viewport_size({"width": width, "height": height})
@@ -23,9 +23,9 @@ async def capture_screenshot_of_url(url, selector=None, width=1024, height=768):
                 screenshot = await page.screenshot()
 
             return screenshot
-        
+
         except Exception as e:
             raise e
-        
+
         finally:
             await browser.close()
