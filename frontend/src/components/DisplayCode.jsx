@@ -19,7 +19,6 @@ const CodeEditor = ({ onChange, language, code, theme }) => {
     },
     detectIndentation: true,
     autoIndent: "advanced",
-    automaticLayout: true,
     folding: false,
     tabSize: 4,
     tabCompletion: "on",
@@ -35,8 +34,6 @@ const CodeEditor = ({ onChange, language, code, theme }) => {
     },
     // Apply border-radius
     roundedSelection: true,
-    border: "1px solid #ccc",
-    "border-radius": "10px",
   }
 
   return (
@@ -50,6 +47,7 @@ const CodeEditor = ({ onChange, language, code, theme }) => {
         defaultLanguage='python'
         options={editorOptions}
         className='editor'
+        loading={null}
         onChange={handleEditorChange}
         />
     </div>

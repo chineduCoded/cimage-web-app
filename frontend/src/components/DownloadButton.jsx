@@ -1,52 +1,54 @@
 import React from 'react';
 import axios from 'axios';
-import { generateUniqueId } from '../lib/generateUniqueId';
+// import { generateUniqueId } from '../lib/generateUniqueId';
 
 const DownloadButton = () => {
-  const handleDownloadClick = async () => {
+
+  const handleDownload = async () => {
     try {
-      const baseUrl = "http://127.0.0.1:5000/api/v1/screenshot/download";
-      const params = { url: "http://localhost:3000", selector: "textarea-wrapper" };
+        // Capture the screenshot and get the image_id
+        const baseUrl = "http://127.0.0.1:5000";
+        const params = { url: "http://localhost:3000", selector: "editor" };
 
-      const response = await axios.get(baseUrl, {
-        params,
-        responseType: 'blob',
-      });
+        const response = await axios.get(`${baseUrl}/api/v1/screenshot`, {
+          params,
+        });
 
-      if (response.status === 200) {
-        const blob = new Blob([response.data]);
-        const contentDisposition = response.headers['content-disposition'];
+        if (response.status === 200) {
+          const { image_id } = response.data;
 
-        // Extract filename from content disposition header
-        const match = contentDisposition && contentDisposition.match(/filename="(.+)"/);
+          if (image_id) {
+            // Construct the download URL using the image_id
+            const downloadUrl = `${baseUrl}/api/v1/download/${image_id}`;
 
-        // Generate unique Id to attached when no match
-        const filenameId = generateUniqueId()
-        console.log(filenameId)
+            // Create an anchor element and set its href to the download URL
+            const link = document.createElement("a");
+            link.href = downloadUrl;
+            link.download = `cimage-${image_id}.png`;
 
-        const filename = match ? match[1] : `cimage-${filenameId}.png`;
+            // Add the link element to the document's body
+            document.body.appendChild(link);
 
-        // Create a temporary anchor element to trigger the download
-        const link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = filename;
+            link.click();
 
-        // Trigger the download
-        link.click();
-
-        // Clean up
-        window.URL.revokeObjectURL(link.href);
-      } else {
-        console.error("Image download failed!");
+            // Remove the link element from the DOM after download
+            document.body.removeChild(link);
+          } else {
+          console.error("Invalid image_id received!");
+          }
+        } else {
+          console.error("Image capture failed!", response.statusText);
       }
     } catch (error) {
-      console.error("Error downloading image:", error.message);
+      console.error("Error:", error.message);
     }
   };
 
   return (
     <div>
-      <button onClick={handleDownloadClick}>Export</button>
+      <button onClick={handleDownload}>
+        Export
+      </button>
     </div>
   );
 };

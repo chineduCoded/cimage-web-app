@@ -1,7 +1,6 @@
 /* CodeEditor Component */
 .container {
 	min-width: 520px;
-	border-radius: 15px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

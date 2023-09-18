@@ -16,7 +16,6 @@ const HomeScreen = () => {
   const [language, setLanguage] = useState(languageOptions[0])
   const [isToggled, setIsToggled] = useState(true)
   const [error, setError] = useState(null);
-  const [downloadUrl, setDownloadUrl] = useState('');
 
   const baseURL = "http://localhost:5000"
 
@@ -32,7 +31,8 @@ const HomeScreen = () => {
         if (axios.isCancel(err)) {
           console.log("Cancelled!")
         } else {
-          console.error("Could not fetch code data", err)
+          console.error("Could not fetch code data", err.message)
+          setError(`error: ${err.message}`)
         }
       })
 
@@ -74,7 +74,7 @@ const HomeScreen = () => {
       setTheme({ value: "oceanic-next", label: "Oceanic Next" })
     );
   }, []);
-  
+
 
   return (
     <main className='home-wrapper'>
