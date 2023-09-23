@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """API Blueprint"""
+import time
 import uuid
 from io import BytesIO
 import base64
@@ -8,8 +9,12 @@ import json
 from flask import jsonify, session, request, current_app, send_file, make_response
 from cimage.api.v1.views import api_bp
 import bleach
+import tweepy
+from rq.job import JobStatus
 from cimage.common.capture_screenshoot_url import capture_screenshot_of_url
 from cimage.common.generate_unique_session_id import generate_unique_session_id
+from cimage.common.handle_capture import handle_screenshot_result
+from config import Config
 
 
 
@@ -60,7 +65,7 @@ def code():
 
 
 
-@api_bp.route("/save_code", methods=["POST"])
+@api_bp.route("/save-code", methods=["POST"])
 def save_code():
     try:
         redis_client = api_bp.redis_client
@@ -110,15 +115,16 @@ def clear_code():
         current_app.logger.error(f"Error clearing session: {str(e)}")
         return jsonify({"error": "Internal Server Error"}), 500
 
-@api_bp.route("/screenshot", methods=["GET"])
+@api_bp.route("/screenshot", methods=["GET"])  # Change method to POST
 def capture_screenshot():
     try:
         redis_client = api_bp.redis_client
 
-        # Get the URL to capture from the request
+        rq = api_bp.rq
+        # Get the URL to capture from the JSON data
         url = request.args.get('url')
-        
-        # Get the page locator from the request
+
+        # Get the page locator from the JSON data
         page_locator = request.args.get('selector')
 
         # Check if URL is provided
@@ -126,11 +132,23 @@ def capture_screenshot():
             return jsonify({'error': 'URL is required'}), 400
 
         # Use asyncio to run the Playwright code
-        screenshot_bytes = asyncio.run(capture_screenshot_of_url(url, page_locator))
+        # screenshot_bytes = asyncio.run(capture_screenshot_of_url(url, page_locator))
+
+        # Enqueue a background task
+        job = rq.enqueue(capture_screenshot_of_url, args=(url, page_locator))
+
+        # Poll for job completion
+        while job.get_status() not in (JobStatus.FINISHED, JobStatus.FAILED):
+            # You can add a delay here to avoid continuous polling
+            time.sleep(1)
+
+        # Wait for the background task to complete and get the result
+        screenshot_bytes = handle_screenshot_result(job)
+
 
         if not screenshot_bytes:
             return jsonify({'error': 'Screenshot capture failed'}), 500
-        
+
         # Encode the image data as a base64-encoded string
         screenshot_base64 = base64.b64encode(screenshot_bytes).decode()
 
@@ -140,15 +158,26 @@ def capture_screenshot():
         # Store the image data in the Redis session
         redis_client.set_image(image_id, screenshot_base64)
 
+        # Generate URLs for downloading and viewing the image
+        base_url = "http://localhost:5000"
+        download_url = f"{base_url}/api/v1/download/{image_id}"
+        image_url = f"{base_url}/api/v1/images/{image_id}",
+        share_link = f"{base_url}/api/v1/images/{image_id}/share"
 
-        # Generate a URL for downloading the image
-        download_url = f"/api/v1/download/{image_id}"
+        response_data = {
+            'message': 'Screenshot captured successfully',
+            'download_url': download_url,
+            'image_url': image_url,
+            'image_id': image_id,
+            "share_link": share_link
+        }
 
-        return jsonify({'message': 'Screenshot captured successfully', 'download_url': download_url, 'image_id': image_id})
+        return jsonify(response_data), 200
 
     except Exception as e:
-        current_app.logger.error(f"Error capturing screenshot: {str(e)}")
-        jsonify({'error': f'Internal Server Error: {str(e)}'}), 500
+        error_message = f'Internal Server Error: {str(e)}'
+        current_app.logger.error(f"Error capturing screenshot: {error_message}")
+        return jsonify({'error': error_message}), 500
     
     
 @api_bp.route('/download/<image_id>', methods=['GET', 'POST'])
@@ -322,13 +351,58 @@ def copy_image_address(image_id):
             return jsonify({'error': 'Image not found'}), 404
 
         # Define the URL for accessing the image based on the provided image_id
-        image_url = f"/api/v1/images/{image_id}"
+        base_url = "http://localhost:5000"
+        image_url = f"{base_url}/api/v1/images/{image_id}"
 
         return jsonify({'image_url': image_url}), 200
 
     except Exception as e:
         current_app.logger.error(f"Error downloading image: {str(e)}")
         return jsonify({'error': f'Internal Server Error: {str(e)}'}), 500
+    
+
+@api_bp.route("/images/<image_id>/share", methods=["POST"])
+def share_to_twitter(image_id):
+    """Share screenshot to twitter"""
+    try:
+        redis_client = api_bp.redis_client
+
+        image_data_base64 = redis_client.get_image(image_id)
+
+        if image_data_base64 is None:
+            return jsonify({"Error": "Image not found"}), 404
+        image_data = base64.b64decode(image_data_base64)
+
+        if not image_data:
+            return jsonify({"error": "Empty image data"}), 500
+        
+        image_stream = BytesIO(image_data)
+
+        # Access Twitter API credentials from the configuration
+        consumer_key = Config.TWITTER_CONSUMER_KEY
+        consumer_secret = Config.TWITTER_CONSUMER_SECRET
+        access_token = Config.TWITTER_ACCESS_TOKEN
+        access_token_secret = Config.TWITTER_ACCESS_TOKEN_SECRET
+
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api = tweepy.API(auth)
+
+        # Compose a tweet
+        tweet_text = request.json.get("tweet_text")
+
+        if tweet_text is None:
+            return jsonify({"error": "Tweet text is required"}), 400
+
+        # Upload to Twitter
+        media = api.media_upload(filename=f"cimage_{image_id}.png", file=image_stream)
+        api.update_status(status=tweet_text, media_ids=[media.media_id])
+
+        return jsonify({"message": "Screenshot share to Twitter successfully"}), 200
+
+    except Exception as e:
+        current_app.logger.error(f"Error sharing image to twitter: {str(e)}")
+        return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500
    
 @api_bp.route('/clear', methods=['POST'])
 def clear_all_images():
