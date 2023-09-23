@@ -6,57 +6,62 @@ import ThemeDropdown from '../components/ThemeDropdown'
 import LanguagesDropdown from '../components/LanguageDropdown'
 import "./styles.css"
 import Switcher from '../components/Switcher'
-import axios from 'axios'
 import DownloadButton from '../components/DownloadButton'
+import { useGetCodeQuery, useGetScreenshotQuery } from '../services/api'
+import axios from "axios"
+import CustomCodeEditor from '../components/CustomCodeEditor'
 
 
 const HomeScreen = () => {
-  const [code, setCode] = useState("")
   const [theme, setTheme] = useState("cobalt")
   const [language, setLanguage] = useState(languageOptions[0])
   const [isToggled, setIsToggled] = useState(true)
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null)
+  const [screenshotData, setScreenshotData] = useState("")
 
-  const baseURL = "http://localhost:5000"
+  const { data: codeData } = useGetCodeQuery();
+  // const { data: captured } = useGetScreenshotQuery({
+  //   url: "http://localhost:3000",
+  //   selector: "editor"
+  // })
 
+  // useEffect(() => {
+  //   const cancelToken = axios.CancelToken.source()
+  //   const baseURL = "http://localhost:5000/api/v1"
+  //   const preURL = "http://localhost:3000"
+  //   const selector = "editor"
+  //   const fetchData = async () => {
 
-  useEffect(() => {
-    const cancelToken = axios.CancelToken.source()
-    axios.get(`${baseURL}/api/v1`, {cancelToken: cancelToken.token})
-      .then(res => {
-        setCode(res.data)
-        console.log(res.data)
-      })
-      .catch(err => {
-        if (axios.isCancel(err)) {
-          console.log("Cancelled!")
-        } else {
-          console.error("Could not fetch code data", err.message)
-          setError(`error: ${err.message}`)
-        }
-      })
+  //     try {
+  //       const res = await axios.get(`${baseURL}/capture?url=${preURL}&selector=${selector}`, {cancelToken: cancelToken.token})
 
-      return () => {
-        cancelToken.cancel()
-      }
-  }, [])
+  //       const data = res.data
+
+  //       if (data) {
+  //         console.log(data)
+  //       } else {
+  //         console.error("Couldn't fetch data")
+  //       }
+  //     } catch (error) {
+  //       if (axios.isCancel(error)) {
+  //         console.log("Request cancelled:", error.message)
+  //       } else {
+  //         console.error("An error occurred:", error)
+  //       }
+  //     }
+  //   }
+
+  //   fetchData()
+
+  //   return () => {
+  //     cancelToken.cancel("Request canceled due to component unmount");
+  //   }
+  // }, [])
 
   const onSelectChange = (sl) => {
     console.log("selected Option...", sl);
     setLanguage(sl);
   };
-
-  const onChange = (action, data) => {
-    switch (action) {
-      case "code": {
-        setCode(data);
-        break;
-      }
-      default: {
-        console.warn("case not handled!", action, data);
-      }
-    }
-  }
 
   function handleThemeChange(th) {
     const theme = th;
@@ -75,16 +80,38 @@ const HomeScreen = () => {
     );
   }, []);
 
+  // useEffect(() => {
+  //   const handleScreenshot = async () => {
+  //     try {
+  //       const res = await postScreenshot({
+  //         url: "http://localhost:3000",
+  //         selector: "editor"
+  //       })
+
+  //       const data = res.data
+  //       if (data) {
+  //         console.log(data)
+  //         setScreenshotData(data)
+  //       }
+  //     } catch (err) {
+  //       console.error("error", err.message)
+  //     }
+  //   }
+
+  //   if (!screenshotData) {
+  //     handleScreenshot()
+  //   }
+  // }, [])
 
   return (
     <main className='home-wrapper'>
         <section className='textarea-wrapper'>
-            <CodeEditor
-              code={code}
-              onChange={onChange}
+            {/* <CodeEditor
+              data={codeData}
               language={language?.value}
               theme={theme.value}
-            />
+            /> */}
+            <CustomCodeEditor data={codeData} />
         </section>
         <section className='bar'>
             <div className='select-theme common'>
@@ -119,7 +146,7 @@ const HomeScreen = () => {
               <LanguagesDropdown onSelectChange={onSelectChange} />
             </div>
             <div className='export-screenshot'>
-                <DownloadButton />
+                <DownloadButton screenshotData={screenshotData} />
               <button>up</button>
             </div>
         </section>

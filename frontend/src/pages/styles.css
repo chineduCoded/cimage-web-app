@@ -59,6 +59,11 @@ textarea {
 
 .textarea-wrapper {
 	margin-block-end: 50px;
+	display: flex;
+	justify-content: center;
+	border: 1px solid crimson;
+	border-radius: 15px;
+	padding: 15px;
 }
 
 /* Action bar below */

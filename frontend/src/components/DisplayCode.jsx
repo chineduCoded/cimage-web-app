@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import Editor from "@monaco-editor/react";
-import "../pages/styles.css"
+import "../pages/styles.css";
 
+const CodeEditor = ({ data, language, theme }) => {
+  
+  const [value, setValue] = useState(data?.code || ""); // Use optional chaining to handle potential undefined values
 
-const CodeEditor = ({ onChange, language, code, theme }) => {
-  const [value, setValue] = useState(code.code || "")
-
-  const handleEditorChange = (value) => {
-    setValue(value)
-    onChange("code", value)
+  const handleChange = (action, data) => {
+    switch (action) {
+      case "code":
+        setValue(data)
+        break;
+      default:
+        console.warn("case not handled!", action, data);
+    }
   }
+  
 
   const editorOptions = {
     lineNumbers: "off",
@@ -36,6 +42,10 @@ const CodeEditor = ({ onChange, language, code, theme }) => {
     roundedSelection: true,
   }
 
+  // useEffect(() => {
+  //   setValue(code?.code || ""); // Update the value when the code prop changes
+  // }, [code]);
+
   return (
     <div className="container">
       <Editor
@@ -43,13 +53,13 @@ const CodeEditor = ({ onChange, language, code, theme }) => {
         language={language || "python"}
         value={value}
         theme={theme}
-        defaultValue={code.code}
+        defaultValue={data?.code || ""}
         defaultLanguage='python'
         options={editorOptions}
         className='editor'
         loading={null}
-        onChange={handleEditorChange}
-        />
+        onChange={(value) => handleChange("code", value)}
+      />
     </div>
   );
 };

@@ -1,79 +1,75 @@
-import React, { useState, useRef, useEffect } from 'react';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/default.css'; // Import a highlight.js style
-// import './CodeEditor.css'; // Import your custom styling
+import React, { useState, useEffect, useMemo } from "react";
+import CodeEditor from "@uiw/react-textarea-code-editor";
+import rehypePrism from "rehype-prism-plus";
+import { debounce } from "lodash";
+import { useSaveCodeMutation } from "../services/api";
 
-const CustomCodeEditor = ({ initialCode }) => {
-  const codeRef = useRef(null);
-  const [code, setCode] = useState(initialCode.code);
+const initialCode = `
+    def get_file_type(binary_data):
+      file_types = {
+        b'\x89PNG\r\n\x1a\n': 'PNG',
+        b'\xFF\xD8\xFF': 'JPEG',
+        b'GIF87a': 'GIF',
+        b'GIF89a': 'GIF',
+        b'\x42\x4D': 'BMP',  # BMP file signature
+        // Add more file signatures and corresponding file types as needed
+      }
 
-  console.log(code)
+      for signature, file_type in file_types.items():
+        if binary_data.startswith(signature):
+          return file_type
+
+      return 'Unknown';
+    `;
+
+const CustomCodeEditor = ({ data }) => {
+  const [codeValue, setCodeValue] = useState("");
+  const [saveCode, {isLoading, isError, error}] = useSaveCodeMutation()
 
   useEffect(() => {
-    // Handle code highlighting when the code state changes
-    const highlightedCode = hljs.highlightAuto(code).value;
-    codeRef.current.innerHTML = highlightedCode;
-  }, [code]);
+    setCodeValue(data?.code || "");
+  }, [data]);
 
-  const handleCodeChange = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const { selectionStart, selectionEnd, value } = codeRef.current;
-      const startOfLine = value.lastIndexOf('\n', selectionStart - 1) + 1;
-      const currentLine = value.substring(startOfLine, selectionStart);
-  
-      // Determine the appropriate indentation (e.g., 2 spaces per indent)
-      const indent = '  '; // You can customize this to your preferred indent style
-  
-      // Create the new code with the inserted newline and indentation
-      const newCode = `${value.substring(0, selectionStart)}\n${indent}${currentLine}${value.substring(selectionEnd)}`;
-  
-      // Update the code state
-      setCode(newCode);
-  
-      // Move the cursor to the end of the inserted indentation
-      codeRef.current.selectionStart = codeRef.current.selectionEnd = selectionStart + indent.length + 1;
-    } else {
-      // Handle other key presses by updating the code state
-      setCode(event.target.value);
-    }
-  };
+  // Memoize the debouncedSaveCode function using useMemo
+  const debouncedSaveCode = useMemo(() => {
+    return debounce((codeToSave) => {
+      const res = saveCode(codeToSave); // Trigger the mutation with the codeToSave
 
-  const handleTabKey = (event) => {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      const { selectionStart, selectionEnd, value } = codeRef.current;
-      const startOfLine = value.lastIndexOf('\n', selectionStart - 1) + 1;
-      const currentLine = value.substring(startOfLine, selectionStart);
-  
-      // Determine the appropriate indentation (e.g., 2 spaces per indent)
-      const indent = '  '; // You can customize this to your preferred indent style
-  
-      // Insert the appropriate indentation at the cursor position
-      const newCode = `${value.substring(0, selectionStart)}${indent}${value.substring(selectionEnd)}`;
-  
-      // Update the code state
-      setCode(newCode);
-  
-      // Move the cursor to the end of the inserted indentation
-      codeRef.current.selectionStart = codeRef.current.selectionEnd = selectionStart + indent.length;
-    }
-  };
-  
-  const handlePaste = (event) => {
-    event.preventDefault();
-    const pastedCode = event.clipboardData.getData('text/plain');
-    const newCode = `${code}${pastedCode}`;
-    setCode(newCode);
-  };
+      if (res) {
+        console.log("Code saved successfully")
+      } else {
+        console.error("Code saving failed")
+      }
+    }, 2000);
+  }, [saveCode]);
 
-   
+  useEffect(() => {
+    debouncedSaveCode(codeValue);
+  }, [codeValue, debouncedSaveCode]);
 
- 
   return (
-    <div className="code-editor">
-      <h1>Code Editor</h1>
-    </div>
+    <CodeEditor
+      value={codeValue}
+      defaultValue={initialCode}
+      onChange={(e) => setCodeValue(e.target.value)}
+      placeholder="Paste your code"
+      padding={15}
+      language="python"
+      data-color-mode="dark"
+      rehypePlugins={[[rehypePrism, { ignoreMissing: true }]]}
+      className="editor"
+      cols={data?.max_chars}
+      rows={data?.num_lines}
+      minHeight={200}
+      style={{
+        fontSize: 16,
+        // backgroundColor: "#f5f5f5",
+        borderRadius: 15,
+        minWidth: 520,
+        fontFamily:
+          'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+      }}
+    />
   );
 };
 

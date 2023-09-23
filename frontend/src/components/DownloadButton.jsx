@@ -1,54 +1,61 @@
-import React from 'react';
-import axios from 'axios';
-// import { generateUniqueId } from '../lib/generateUniqueId';
+import React, { useEffect, useState } from 'react';
+import { usePostScreenshotMutation } from '../services/api';
 
-const DownloadButton = () => {
+const DownloadButton = ({ screenshotData }) => {
+  // const [imageId, setImageId] = useState('')
+  // const [downloalUrl, setDownloadUrl] = useState('')
+  // const [imageUrl, setImageUrl] = useState('')
 
-  const handleDownload = async () => {
-    try {
-        // Capture the screenshot and get the image_id
-        const baseUrl = "http://127.0.0.1:5000";
-        const params = { url: "http://localhost:3000", selector: "editor" };
+  const { image_url, download_url, image_id } = screenshotData
 
-        const response = await axios.get(`${baseUrl}/api/v1/screenshot`, {
-          params,
-        });
+  
+  // const { data: screenshotData, error: screenshotError } = useGetScreenshotQuery({
+  //   url: 'http://localhost:3000',
+  //   selector: 'editor',
+  // });
 
-        if (response.status === 200) {
-          const { image_id } = response.data;
+  // const { data: imageData, error: imageError } = useGetImageIdQuery(imageId || '');
 
-          if (image_id) {
-            // Construct the download URL using the image_id
-            const downloadUrl = `${baseUrl}/api/v1/download/${image_id}`;
+  // useEffect(() => {
+  //   if (screenshotError) {
+  //     console.error('Error fetching screenshot:', screenshotError);
+  //   }
+  //   if (imageError) {
+  //     console.error('Error fetching image:', imageError);
+  //   }
+  // }, [screenshotError, imageError]);
 
-            // Create an anchor element and set its href to the download URL
-            const link = document.createElement("a");
-            link.href = downloadUrl;
-            link.download = `cimage-${image_id}.png`;
+  const handleDownload = () => {
+    if (download_url) {
+      const link = document.createElement('a');
+      link.href = download_url;
+      link.download = `image-${image_id || ''}.png`;
 
-            // Add the link element to the document's body
-            document.body.appendChild(link);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      console.error('Download URL not available');
+    }
+  };
 
-            link.click();
-
-            // Remove the link element from the DOM after download
-            document.body.removeChild(link);
-          } else {
-          console.error("Invalid image_id received!");
-          }
-        } else {
-          console.error("Image capture failed!", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error.message);
+  const handleCopy = () => {
+    if (image_url) {
+      navigator.clipboard.writeText(image_url)
+        .then(() => {
+          alert('Image URL copied to clipboard');
+          console.log('Image URL copied to clipboard');
+        })
+        .catch(error => console.error('Unable to copy text: ', error));
+    } else {
+      console.error('Image URL not available');
     }
   };
 
   return (
     <div>
-      <button onClick={handleDownload}>
-        Export
-      </button>
+      <button onClick={handleDownload}>Export</button>
+      <button onClick={handleCopy}>Copy URL</button>
     </div>
   );
 };
