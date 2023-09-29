@@ -2,6 +2,7 @@
 """API Blueprint"""
 import time
 import uuid
+import secrets
 from io import BytesIO
 import base64
 import asyncio
@@ -80,7 +81,7 @@ def save_code():
             current_app.logger.error("No code provided")
             return jsonify({"error": "No code provided"}), 400
         
-        if len(sanitized_code) > 1500:
+        if len(sanitized_code) > 10000:
             current_app.logger.error("Code is too long!")
             return jsonify({"error": "Code is too long!"}), 400
         
@@ -115,35 +116,24 @@ def clear_code():
         current_app.logger.error(f"Error clearing session: {str(e)}")
         return jsonify({"error": "Internal Server Error"}), 500
 
-@api_bp.route("/screenshot", methods=["GET"])  # Change method to POST
+@api_bp.route("/screenshot", methods=["GET"])
 def capture_screenshot():
     try:
         redis_client = api_bp.redis_client
 
         rq = api_bp.rq
-        # Get the URL to capture from the JSON data
-        url = request.args.get('url')
+        
+        # Get the URL and page locator from the JSON data
 
-        # Get the page locator from the JSON data
-        page_locator = request.args.get('selector')
+        url = request.args.get("url")
+        page_locator = request.args.get("selector")
 
         # Check if URL is provided
         if not url:
             return jsonify({'error': 'URL is required'}), 400
 
         # Use asyncio to run the Playwright code
-        # screenshot_bytes = asyncio.run(capture_screenshot_of_url(url, page_locator))
-
-        # Enqueue a background task
-        job = rq.enqueue(capture_screenshot_of_url, args=(url, page_locator))
-
-        # Poll for job completion
-        while job.get_status() not in (JobStatus.FINISHED, JobStatus.FAILED):
-            # You can add a delay here to avoid continuous polling
-            time.sleep(1)
-
-        # Wait for the background task to complete and get the result
-        screenshot_bytes = handle_screenshot_result(job)
+        screenshot_bytes = asyncio.run(capture_screenshot_of_url(url, page_locator))
 
 
         if not screenshot_bytes:
@@ -153,23 +143,24 @@ def capture_screenshot():
         screenshot_base64 = base64.b64encode(screenshot_bytes).decode()
 
         # Generate a unique identifier for the image
-        image_id = generate_unique_session_id()
+        image_id = uuid.uuid4().hex
 
         # Store the image data in the Redis session
         redis_client.set_image(image_id, screenshot_base64)
 
         # Generate URLs for downloading and viewing the image
-        base_url = "http://localhost:5000"
+        base_url = current_app.config.get("BASE_URL")
         download_url = f"{base_url}/api/v1/download/{image_id}"
         image_url = f"{base_url}/api/v1/images/{image_id}",
-        share_link = f"{base_url}/api/v1/images/{image_id}/share"
+        share_link = f"{base_url}/api/v1/share/{image_id}"
 
         response_data = {
             'message': 'Screenshot captured successfully',
             'download_url': download_url,
             'image_url': image_url,
             'image_id': image_id,
-            "share_link": share_link
+            "share_link": share_link,
+            "screenshot_base64": screenshot_base64
         }
 
         return jsonify(response_data), 200
@@ -361,7 +352,7 @@ def copy_image_address(image_id):
         return jsonify({'error': f'Internal Server Error: {str(e)}'}), 500
     
 
-@api_bp.route("/images/<image_id>/share", methods=["POST"])
+@api_bp.route("/share/<image_id>", methods=["POST"])
 def share_to_twitter(image_id):
     """Share screenshot to twitter"""
     try:

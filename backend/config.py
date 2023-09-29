@@ -25,6 +25,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    BASE_URL = "http://localhost:5000"
+    ALLOWED_ORIGIN = "http://localhost:3000"
     # Redis session configuration
     SESSION_TYPE = 'redis'
     SESSION_PERMANENT = False

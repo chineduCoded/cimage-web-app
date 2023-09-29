@@ -22,7 +22,7 @@ def create_app():
     # Initialize extensions
     cors = CORS(app, resources={
         r"/*": {
-            "origins": "http://localhost:3000",
+            "origins": app.config.get("ALLOWED_ORIGIN"),
         }
     })
     Session(app)
