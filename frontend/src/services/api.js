@@ -22,11 +22,26 @@ export const cimageApi = createApi({
           }),
           invalidatesTags: ["Codes"]
         }),
-        getScreenshot: builder.query({
-          query: ({url, selector}) => ({
-            url: `/capture?url=${url}&selector=${selector}`
+        getCapturedData: builder.query({
+          query: (args) => {
+            const {url, selector} = args
+            console.log({"args": args})
+            return {
+              url: `/screenshot?url=${url}&selector=${selector}`
+            }
+          },
+          providesTags: ["Images"]
+        }),
+        saveScreenshot: builder.mutation({
+          query: ({ url, selector }) => ({
+            url: "/screenshot",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ url, selector }),
           }),
-          providesTags: ['Images']
+          invalidatesTags: ["Images"],
         }),
         getImageId: builder.query({
           query: (imageId) => `/images/${imageId}`,
@@ -35,4 +50,4 @@ export const cimageApi = createApi({
     })
 })
 
-export const { useGetCodeQuery, useSaveCodeMutation, useGetScreenshotQuery, useGetImageIdQuery } = cimageApi
+export const { useGetCodeQuery, useSaveCodeMutation, useGetCapturedDataQuery, useSaveScreenshotMutation, useGetImageIdQuery } = cimageApi

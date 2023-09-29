@@ -50,7 +50,6 @@ const CustomCodeEditor = ({ data }) => {
   return (
     <CodeEditor
       value={codeValue}
-      defaultValue={initialCode}
       onChange={(e) => setCodeValue(e.target.value)}
       placeholder="Paste your code"
       padding={15}
@@ -60,12 +59,13 @@ const CustomCodeEditor = ({ data }) => {
       className="editor"
       cols={data?.max_chars}
       rows={data?.num_lines}
-      minHeight={200}
+      minHeight={data?.num_lines}
       style={{
         fontSize: 16,
         // backgroundColor: "#f5f5f5",
         borderRadius: 15,
         minWidth: 520,
+        maxWidth: 920,
         fontFamily:
           'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
       }}

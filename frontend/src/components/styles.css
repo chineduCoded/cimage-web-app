@@ -49,3 +49,81 @@ input:checked + .slider:before {
 .slider.rounded::before {
     border-radius: 50%;
 }
+
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .share {
+    position: absolute;
+    top: -100px; /* Adjust this value to control the vertical position */
+    left: 280px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    padding: 10px;
+    z-index: 1; /* Ensures the share content is displayed above other elements */
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+  }
+  
+  .share-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .btn-wrap {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    cursor: pointer;
+  }
+  
+  .btn {
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-weight: 500;
+    font-size: 17px;
+    cursor: pointer;
+  }
+
+  .link {
+    color: crimson;
+    font-weight: 500;
+  }
+
+  .tweet {
+    color: #00acee;
+    font-weight: 500;
+  }
+
+  .export {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid crimson;
+    border-radius: 5px;
+    padding: 3px 10px;
+  }
+  
+  .show {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    border: 2px solid crimson;
+    border-radius: 5px;
+    padding: 3px;
+  }
+  
+  .show-active {
+    transform: rotate(180deg);
+    /* Add any additional styles you want for the "show" button when it's active */
+  }  
