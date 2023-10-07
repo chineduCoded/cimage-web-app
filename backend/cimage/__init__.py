@@ -20,7 +20,7 @@ def create_app():
     app.config.from_object(DevelopmentConfig)
 
     # Initialize extensions
-    cors = CORS(app, resources={
+    cors.init_app(app, resources={
         r"/*": {
             "origins": app.config.get("ALLOWED_ORIGIN"),
         }
@@ -50,5 +50,4 @@ def create_app():
     app.register_blueprint(cimage_views)
     app.register_blueprint(api_bp)
     
-
     return app

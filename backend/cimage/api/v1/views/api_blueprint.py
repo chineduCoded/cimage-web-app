@@ -2,20 +2,23 @@
 """API Blueprint"""
 import time
 import uuid
-import secrets
 from io import BytesIO
 import base64
 import asyncio
 import json
-from flask import jsonify, session, request, current_app, send_file, make_response
+from cachetools import LRUCache
+from cachetools.keys import hashkey
+from flask import jsonify, session, request, current_app, send_file
 from cimage.api.v1.views import api_bp
 import bleach
 import tweepy
-from rq.job import JobStatus
 from cimage.common.capture_screenshoot_url import capture_screenshot_of_url
 from cimage.common.generate_unique_session_id import generate_unique_session_id
-from cimage.common.handle_capture import handle_screenshot_result
+from cimage.common.has_correct_padding import has_correct_padding
 from config import Config
+from playwright.async_api import async_playwright
+
+cache = LRUCache(maxsize=100)
 
 
 
@@ -42,24 +45,21 @@ def code():
         code_bytes = redis_client.get("code")
 
         if code_bytes is None:
-            sanitized_code = bleach.clean(PLACEHOLDER_CODE, tags=[], attributes={}, strip=True)
-            sanitized_code_bytes = sanitized_code.encode("utf-8")  # Encode as bytes
-            redis_client.set("code", sanitized_code_bytes)
-            code_bytes = sanitized_code_bytes
+            return jsonify({"error": "Code not found in Redis"}), 404
 
         code = code_bytes.decode("utf-8")  # Decode from bytes to string
         lines = code.split("\n")
 
         response_data = {
             "message": "successful",
-            "display": "Paste your code",
+            "display": "Code retrieved from Redis",
             "code": code,
             "num_lines": len(lines),
             "max_chars": len(max(lines, key=len)),
         }
 
         return jsonify(response_data), 200
-    
+
     except Exception as e:
         current_app.logger.error(f"error: {str(e)}")
         return jsonify({"error": "Internal Server Error: Unable to fetch code"}), 500
@@ -75,21 +75,24 @@ def save_code():
         code_bytes = request.get_data()
         code = code_bytes.decode("utf-8")
 
-        sanitized_code = bleach.clean(code, tags=[], attributes={}, strip=True)
+        # sanitized_code = bleach.clean(code, tags=[], attributes={}, strip=True)
 
-        if not sanitized_code:
+        if not code:
             current_app.logger.error("No code provided")
             return jsonify({"error": "No code provided"}), 400
         
-        if len(sanitized_code) > 10000:
+        if len(code) > 10000:
             current_app.logger.error("Code is too long!")
             return jsonify({"error": "Code is too long!"}), 400
         
-        redis_client.set("code", sanitized_code)
+        redis_client.set("code", code)
 
         current_app.logger.info("Code saved successfully")
 
-        return jsonify({"message": "Code saved successfully", "session_id": session.sid}), 201
+        return jsonify({
+            "message": "Code saved successfully",
+            "session_id": session.sid
+        }), 201
 
     except Exception as e:
         current_app.logger.error(f"error: {str(e)}")
@@ -116,15 +119,14 @@ def clear_code():
         current_app.logger.error(f"Error clearing session: {str(e)}")
         return jsonify({"error": "Internal Server Error"}), 500
 
+
 @api_bp.route("/screenshot", methods=["GET"])
 def capture_screenshot():
+    """Captures screenshot of web page using css selector"""
     try:
         redis_client = api_bp.redis_client
 
-        rq = api_bp.rq
-        
-        # Get the URL and page locator from the JSON data
-
+        # Get the URL and page locator from the query parameters
         url = request.args.get("url")
         page_locator = request.args.get("selector")
 
@@ -132,45 +134,55 @@ def capture_screenshot():
         if not url:
             return jsonify({'error': 'URL is required'}), 400
 
-        # Use asyncio to run the Playwright code
-        screenshot_bytes = asyncio.run(capture_screenshot_of_url(url, page_locator))
+        try:
+            screenshot_bytes = asyncio.run(capture_screenshot_of_url(url, page_locator))
 
 
-        if not screenshot_bytes:
-            return jsonify({'error': 'Screenshot capture failed'}), 500
+            if not screenshot_bytes:
+                return {'error': 'Page not available!'}, 404
+            
+            
+            try:
+                # Encode the image data as a base64-encoded string
+                screenshot_base64 = base64.b64encode(screenshot_bytes).decode()
 
-        # Encode the image data as a base64-encoded string
-        screenshot_base64 = base64.b64encode(screenshot_bytes).decode()
+            except Exception as e:
+                # Handle the encoding error here
+                print(f"Error encoding screenshot bytes to base64: {str(e)}")
+                return jsonify({'error': f'Error encoding screenshot: {str(e)}'}), 500
 
-        # Generate a unique identifier for the image
-        image_id = uuid.uuid4().hex
 
-        # Store the image data in the Redis session
-        redis_client.set_image(image_id, screenshot_base64)
+            # Generate a unique identifier for the image
+            image_id = uuid.uuid4()
 
-        # Generate URLs for downloading and viewing the image
-        base_url = current_app.config.get("BASE_URL")
-        download_url = f"{base_url}/api/v1/download/{image_id}"
-        image_url = f"{base_url}/api/v1/images/{image_id}",
-        share_link = f"{base_url}/api/v1/share/{image_id}"
+            # Store the image data in the Redis session
+            redis_client.set_image(image_id, screenshot_base64)
 
-        response_data = {
-            'message': 'Screenshot captured successfully',
-            'download_url': download_url,
-            'image_url': image_url,
-            'image_id': image_id,
-            "share_link": share_link,
-            "screenshot_base64": screenshot_base64
-        }
+            base_url = current_app.config.get("BASE_URL")
+            image_url = f"{base_url}/api/v1/images/{image_id}"
+            download_url = f"{base_url}/api/v1/download/{image_id}"
 
-        return jsonify(response_data), 200
+            response_data = {
+                'message': 'Screenshot captured successfully',
+                'image_id': image_id,
+                'image_url': image_url,
+                'download_url': download_url
+            }
+
+            return jsonify(response_data), 200
+
+        except Exception as e:
+            current_app.logger.error(f"Error capturing screenshot: {str(e)}")
+            return {'error': f'Error capturing screenshot: {str(e)}'}, 500
 
     except Exception as e:
         error_message = f'Internal Server Error: {str(e)}'
-        current_app.logger.error(f"Error capturing screenshot: {error_message}")
+        current_app.logger.error(f"Error handling screenshot request: {error_message}")
         return jsonify({'error': error_message}), 500
-    
-    
+
+
+
+        
 @api_bp.route('/download/<image_id>', methods=['GET', 'POST'])
 def download_image(image_id):
     try:
@@ -181,9 +193,13 @@ def download_image(image_id):
 
         if image_data_base64 is None:
             return jsonify({'error': 'Image not found'}), 404
-        
-        # Decode the base64-encoded image data back into binary data
-        image_data = base64.b64decode(image_data_base64)
+
+        try:
+            # Decode the base64-encoded image data back into binary data
+            image_data = base64.b64decode(image_data_base64)
+        except Exception as decode_error:
+            current_app.logger.error(f"Base64 decoding error: {str(decode_error)}")
+            return jsonify({'error': f'Base64 decoding error: {str(decode_error)}'}), 500
 
         if not image_data:
             return jsonify({'error': 'Empty image data'}), 500
@@ -315,8 +331,12 @@ def get_single_image(image_id):
         if image_data_base64 is None:
             return jsonify({'error': 'Image not found'}), 404
             
-        # Decode the base64-encoded image data back into binary data
-        image_data = base64.b64decode(image_data_base64)
+        try:
+            # Decode the base64-encoded image data back into binary data
+            image_data = base64.b64decode(image_data_base64)
+        except Exception as decode_error:
+            current_app.logger.error(f"Base64 decoding error: {str(decode_error)}")
+            return jsonify({'error': f'Base64 decoding error: {str(decode_error)}'}), 500
 
         if not image_data:
             return jsonify({'error': 'Empty image data'}), 500

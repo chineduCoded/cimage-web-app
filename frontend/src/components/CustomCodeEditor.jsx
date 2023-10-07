@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
-import CodeEditor from "@uiw/react-textarea-code-editor";
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import CodeEditor, { SelectionText } from "@uiw/react-textarea-code-editor";
 import rehypePrism from "rehype-prism-plus";
 import { debounce } from "lodash";
 import { useSaveCodeMutation } from "../services/api";
@@ -22,7 +22,8 @@ const initialCode = `
       return 'Unknown';
     `;
 
-const CustomCodeEditor = ({ data }) => {
+const CustomCodeEditor = ({ data, language }) => {
+  const textRef = useRef()
   const [codeValue, setCodeValue] = useState("");
   const [saveCode, {isLoading, isError, error}] = useSaveCodeMutation()
 
@@ -47,13 +48,23 @@ const CustomCodeEditor = ({ data }) => {
     debouncedSaveCode(codeValue);
   }, [codeValue, debouncedSaveCode]);
 
+  // console.log({"language": language})
+
+  useEffect(() => {
+    if (textRef.current) {
+      const obj = new SelectionText(textRef.current);
+      console.log("obj:", obj);
+    }
+  }, [])
+
   return (
     <CodeEditor
+      ref={textRef}
       value={codeValue}
       onChange={(e) => setCodeValue(e.target.value)}
       placeholder="Paste your code"
       padding={15}
-      language="python"
+      language={language}
       data-color-mode="dark"
       rehypePlugins={[[rehypePrism, { ignoreMissing: true }]]}
       className="editor"

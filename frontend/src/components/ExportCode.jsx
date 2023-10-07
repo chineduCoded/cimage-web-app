@@ -4,6 +4,8 @@ import { IoIosArrowUp } from "react-icons/io"
 import { ImLink } from "react-icons/im"
 import { BsTwitter } from "react-icons/bs"
 import "./styles.css"
+import { useGetCodeQuery } from '../services/api'
+import toast from 'react-hot-toast'
 
 const ExportCode = () => {
   const [downloadUrl, setDownloadUrl] = useState('');
@@ -14,7 +16,9 @@ const ExportCode = () => {
   const [show, setShow] = useState(false)
   // const { image_url, download_url, image_id, share_link } = responseData
 
-  const baseURL = "http://localhost:5000/api/v1"
+  const baseURL = "http://localhost:5000"
+
+  const { data: response_data } = useGetCodeQuery()
 
   // Function to capture the screenshot
   const captureScreenshot = useCallback(async () => {
@@ -23,7 +27,7 @@ const ExportCode = () => {
       const url = "http://localhost:3000"
       const selector = "editor"
 
-      const response = await fetch(`${baseURL}/screenshot?url=${url}&selector=${selector}`)
+      const response = await fetch(`${baseURL}/api/v1/screenshot?url=${url}&selector=${selector}`)
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
@@ -50,14 +54,14 @@ const ExportCode = () => {
   const debouncedCaptureScreenshot = useCallback(
     debounce(() => {
       captureScreenshot();
-    }, 30000), // Adjust the debounce delay as needed
+    }, 1000), // Adjust the debounce delay as needed
     []
   );
 
   // Use useEffect to capture the screenshot automatically
   useEffect(() => {
     debouncedCaptureScreenshot();
-  }, [debouncedCaptureScreenshot])
+  }, [debouncedCaptureScreenshot, response_data])
 
 
   const handleDownload = () => {
@@ -69,7 +73,9 @@ const ExportCode = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      toast.success('Image downloaded')
     } else {
+      toast.error('Download URL not available')
       console.error('Download URL not available');
     }
   };
@@ -78,11 +84,12 @@ const ExportCode = () => {
     if (imageUrl) {
       navigator.clipboard.writeText(imageUrl)
         .then(() => {
-          alert('Image URL copied to clipboard');
+          toast.success('Image URL copied to clipboard')
           console.log('Image URL copied to clipboard');
         })
         .catch(error => console.error('Unable to copy text: ', error));
     } else {
+      toast.error('Image URL not available')
       console.error('Image URL not available');
     }
   };

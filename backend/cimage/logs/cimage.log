@@ -2044,3 +2044,238 @@ navigating to "undefined", waiting until "load"
 2023-09-29 16:35:32,281 - cimage.common.logger - INFO - Code saved successfully
 2023-09-29 16:35:52,157 - cimage.common.logger - INFO - Code saved successfully
 2023-09-29 16:37:56,290 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:13:09,946 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:13:35,041 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:15:49,631 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:16:39,619 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:24:37,805 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:27:37,786 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:27:39,945 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:29:15,626 - cimage.common.logger - INFO - Code saved successfully
+2023-09-29 23:44:26,910 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:00:20,467 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:01:40,786 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:01:51,109 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:02:54,653 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:12:47,629 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:12:47,629 - cimage.common.logger - ERROR - error: Object of type PythonLexer is not JSON serializable
+2023-09-30 15:13:21,209 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:25:21,644 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:27:23,278 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:29:12,939 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:31:51,608 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:34:38,696 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:35:30,815 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:44:11,718 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:49:35,947 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:49:42,768 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:55:55,969 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:55:58,167 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:27,880 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:29,995 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:32,132 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:34,248 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:36,371 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:38,527 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:40,672 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:42,805 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:45,177 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:47,324 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:49,473 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:51,629 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:53,765 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:55,897 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:58:58,049 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 15:59:00,197 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:03:07,117 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:05:55,792 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:16:38,736 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:16:40,886 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:22:10,785 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:24:56,691 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:24:57,077 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:25:42,591 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:27:31,692 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:30:01,670 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:32:35,739 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:34:40,817 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:35:25,924 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:38:24,082 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:40:19,905 - cimage.common.logger - INFO - Code saved successfully
+2023-09-30 16:43:11,539 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 11:47:02,136 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 13:02:16,068 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:41:37,706 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:41:51,653 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:51:01,899 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:51:09,436 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:52:56,952 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:53:05,098 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:54:04,258 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:55:35,894 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:55:43,632 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:58:53,583 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 14:59:01,012 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:19:07,106 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:19:15,108 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:22:24,646 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:22:31,652 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:36:41,245 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:36:57,170 - cimage.common.logger - INFO - Code saved successfully
+2023-10-02 15:50:33,888 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 02:24:56,839 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 02:25:24,754 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: 'PlaywrightContextManager' object has no attribute 'chromium'
+2023-10-03 02:29:29,475 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: 'PlaywrightContextManager' object has no attribute 'chromium'
+2023-10-03 02:30:40,392 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: 'PlaywrightContextManager' object has no attribute 'chromium'
+2023-10-03 02:36:48,866 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: object PlaywrightContextManager can't be used in 'await' expression
+2023-10-03 02:40:12,446 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:40:32,314 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:40:35,896 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:40:39,531 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:42:39,055 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: local variable 'context' referenced before assignment
+2023-10-03 02:44:27,971 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:46:00,749 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:49:40,911 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: local variable 'context' referenced before assignment
+2023-10-03 02:52:51,676 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:54:23,734 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:54:26,114 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:57:18,661 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 02:57:49,384 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Connection closed
+2023-10-03 03:07:41,356 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed
+2023-10-03 03:08:42,182 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed
+2023-10-03 03:14:38,538 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed
+2023-10-03 03:26:14,850 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed
+2023-10-03 03:41:14,275 - cimage.common.logger - ERROR - Error capturing screenshot: object PlaywrightContextManager can't be used in 'await' expression
+2023-10-03 03:44:21,578 - cimage.common.logger - ERROR - Error capturing screenshot: object PlaywrightContextManager can't be used in 'await' expression
+2023-10-03 03:46:14,334 - cimage.common.logger - ERROR - Error capturing screenshot: object PlaywrightContextManager can't be used in 'await' expression
+2023-10-03 03:51:06,974 - cimage.common.logger - ERROR - Error capturing screenshot: object PlaywrightContextManager can't be used in 'await' expression
+2023-10-03 04:04:50,090 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 04:28:12,299 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 04:46:58,675 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 04:58:04,523 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed while reading from the driver
+2023-10-03 04:58:04,585 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 05:03:11,993 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 05:04:33,246 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 05:07:43,377 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 05:07:54,598 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 14:22:30,368 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 14:23:47,435 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 14:56:40,073 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:09:21,062 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:09:50,196 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: Timeout 30000ms exceeded.
+=========================== logs ===========================
+navigating to "http://localhost:3000/", waiting until "load"
+============================================================
+2023-10-03 15:11:49,200 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:22:02,840 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:22:36,297 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:22:36,312 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:22:36,632 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:30:26,526 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:30:56,577 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed while reading from the driver
+2023-10-03 15:30:56,620 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:30:56,626 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:32:26,774 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:32:26,779 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:35:37,364 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:36:41,427 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:37:36,592 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 15:37:49,366 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed while reading from the driver
+2023-10-03 15:37:49,400 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 15:59:52,666 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:02:41,894 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:10:33,219 - cimage.common.logger - ERROR - Error capturing screenshot: asyncio.run() cannot be called from a running event loop
+2023-10-03 16:10:33,339 - cimage.common.logger - ERROR - Error capturing screenshot: asyncio.run() cannot be called from a running event loop
+2023-10-03 16:10:35,670 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:11:38,817 - cimage.common.logger - ERROR - Error capturing screenshot: asyncio.run() cannot be called from a running event loop
+2023-10-03 16:11:38,891 - cimage.common.logger - ERROR - Error capturing screenshot: asyncio.run() cannot be called from a running event loop
+2023-10-03 16:11:41,404 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:15:25,189 - cimage.common.logger - ERROR - Error capturing screenshot: asyncio.run() cannot be called from a running event loop
+2023-10-03 16:20:32,064 - cimage.common.logger - ERROR - Error capturing screenshot: asyncio.run() cannot be called from a running event loop
+2023-10-03 16:23:09,045 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:23:30,231 - cimage.common.logger - ERROR - Error capturing screenshot: invalid state
+2023-10-03 16:23:30,249 - cimage.common.logger - ERROR - Error capturing screenshot: Target page, context or browser has been closed
+2023-10-03 16:38:57,242 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:39:19,044 - cimage.common.logger - INFO - Code saved successfully
+2023-10-03 16:39:51,218 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-03 16:41:23,472 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-03 16:41:34,318 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-03 16:44:51,937 - cimage.common.logger - ERROR - Error capturing screenshot: Task <Task pending name='Task-5' coro=<capture_screenshot_of_url() running at /home/chinedu/cimage-web-app/backend/cimage/common/capture_screenshoot_url.py:12> cb=[_run_until_complete_cb() at /usr/lib/python3.10/asyncio/base_events.py:184, ProtocolCallback.__init__.<locals>.cb() at /home/chinedu/cimage-web-app/backend/venv/lib/python3.10/site-packages/playwright/_impl/_connection.py:190]> got Future <Future pending> attached to a different loop
+2023-10-03 16:48:46,652 - cimage.common.logger - ERROR - Error capturing screenshot: Task <Task pending name='Task-5' coro=<capture_screenshot_of_url() running at /home/chinedu/cimage-web-app/backend/cimage/common/capture_screenshoot_url.py:13> cb=[_run_until_complete_cb() at /usr/lib/python3.10/asyncio/base_events.py:184, ProtocolCallback.__init__.<locals>.cb() at /home/chinedu/cimage-web-app/backend/venv/lib/python3.10/site-packages/playwright/_impl/_connection.py:190]> got Future <Future pending> attached to a different loop
+2023-10-03 16:59:00,189 - cimage.common.logger - ERROR - Error capturing screenshot: 'RedisClient' object has no attribute 'app'
+2023-10-03 17:00:03,658 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: value is not an integer or out of range
+2023-10-03 17:00:06,712 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: value is not an integer or out of range
+2023-10-03 17:00:09,665 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: value is not an integer or out of range
+2023-10-03 17:00:12,633 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: value is not an integer or out of range
+2023-10-03 17:00:15,521 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: value is not an integer or out of range
+2023-10-03 17:00:18,501 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: value is not an integer or out of range
+2023-10-03 17:09:17,251 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed
+2023-10-03 17:12:33,792 - cimage.common.logger - ERROR - Error capturing screenshot: Connection closed
+2023-10-04 01:55:26,139 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: 'str' object has no attribute 'goto'
+2023-10-04 01:55:26,262 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: 'str' object has no attribute 'goto'
+2023-10-04 01:55:28,687 - cimage.common.logger - INFO - Code saved successfully
+2023-10-04 01:57:22,887 - cimage.common.logger - INFO - Code saved successfully
+2023-10-04 02:01:14,233 - cimage.common.logger - INFO - Code saved successfully
+2023-10-04 02:02:52,877 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-04 02:15:02,901 - cimage.common.logger - INFO - Code saved successfully
+2023-10-06 20:45:56,010 - cimage.common.logger - INFO - Code saved successfully
+2023-10-06 20:58:58,745 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:03:53,122 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:08:21,898 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:08:41,374 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:09:28,411 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:09:44,772 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:14:29,439 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:17:44,468 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:21:50,992 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:29:24,451 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:36:44,951 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:41:30,724 - cimage.common.logger - ERROR - Base64 decoding error: Non-base64 digit found
+2023-10-06 21:42:05,718 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 21:48:42,169 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 21:48:50,907 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:49:16,149 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 21:51:07,726 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 21:51:28,336 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 21:59:26,503 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 22:13:12,425 - cimage.common.logger - ERROR - Base64 decoding error: can't concat str to bytes
+2023-10-06 22:15:26,091 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 22:23:32,900 - cimage.common.logger - ERROR - Error downloading image: can't concat str to bytes
+2023-10-06 22:32:27,779 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 22:39:10,860 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 22:39:46,757 - cimage.common.logger - ERROR - Base64 decoding error: Incorrect padding
+2023-10-06 22:40:07,807 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-06 22:41:09,654 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-07 02:15:23,929 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-07 02:15:39,244 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: net::ERR_CONNECTION_REFUSED at http://localhost:3000/
+=========================== logs ===========================
+navigating to "http://localhost:3000/", waiting until "load"
+============================================================
+2023-10-07 02:15:58,157 - cimage.common.logger - ERROR - Error capturing screenshot: Error capturing screenshot: net::ERR_CONNECTION_REFUSED at http://localhost:3000/
+=========================== logs ===========================
+navigating to "http://localhost:3000/", waiting until "load"
+============================================================
+2023-10-07 02:21:23,563 - cimage.common.logger - ERROR - No code provided
+2023-10-07 02:21:25,628 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 02:35:57,663 - cimage.common.logger - ERROR - Error capturing screenshot: Object of type type is not JSON serializable
+2023-10-07 02:40:17,773 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-07 02:42:53,285 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-07 02:43:13,374 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-07 02:44:02,859 - cimage.common.logger - ERROR - Error downloading image: Incorrect padding
+2023-10-07 02:59:53,095 - cimage.common.logger - ERROR - Error capturing screenshot: Object of type bytes is not JSON serializable
+2023-10-07 03:00:25,490 - cimage.common.logger - ERROR - Error capturing screenshot: Object of type bytes is not JSON serializable
+2023-10-07 03:13:48,085 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:14:43,959 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:23:49,215 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:24:00,133 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:26:11,753 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:27:38,703 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:42:37,714 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:46:00,347 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:50:45,300 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 03:59:44,549 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 04:02:53,372 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 04:11:08,738 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 04:17:24,001 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 04:20:00,062 - cimage.common.logger - INFO - Code saved successfully
+2023-10-07 04:20:11,955 - cimage.common.logger - INFO - Code saved successfully

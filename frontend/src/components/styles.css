@@ -126,4 +126,20 @@ input:checked + .slider:before {
   .show-active {
     transform: rotate(180deg);
     /* Add any additional styles you want for the "show" button when it's active */
-  }  
+  }
+
+  .form {
+    padding: 5px;
+  }
+
+  .form p {
+    margin-block-end: 10px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .selected-option {
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 500;
+  }
