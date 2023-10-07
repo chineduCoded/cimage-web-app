@@ -63,10 +63,11 @@ const HomeScreen = () => {
             <div className='toggle-dark common'>
             </div> */}
             <div className='select-language common'>
+              <h4>Language</h4>
               <LanguageSelect onSelectChange={onSelectChange} />
             </div>
             <div className='export-screenshot'>
-              {/* <ExportCode /> */}
+              <ExportCode />
             </div>
         </section>
     </main>

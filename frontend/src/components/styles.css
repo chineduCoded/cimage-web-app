@@ -51,24 +51,27 @@ input:checked + .slider:before {
 }
 
 .container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .share {
-    position: absolute;
-    top: -100px; /* Adjust this value to control the vertical position */
-    left: 280px;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    padding: 10px;
-    z-index: 1; /* Ensures the share content is displayed above other elements */
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-  }
+  position: relative;
+}
+
+.share {
+  position: absolute;
+  top: 430px;
+  right: 305px;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  display: flex;
+  /* flex-direction: column; */
+  border-radius: 8px;
+  transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* .container:hover .share {
+  bottom: 100%; 
+  opacity: 1;
+} */
   
   .share-btns {
     display: flex;
@@ -107,10 +110,13 @@ input:checked + .slider:before {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    font-size: 18px;
-    border: 2px solid crimson;
+    font-size: 17px;
+    border: 2px solid #C3BFD3;;
     border-radius: 5px;
-    padding: 3px 10px;
+    padding: 5px 15px;
+    margin-inline-end: 8px;
+    color: teal;
+    font-weight: 600;
   }
   
   .show {
@@ -118,9 +124,12 @@ input:checked + .slider:before {
     border: none;
     cursor: pointer;
     font-size: 18px;
-    border: 2px solid crimson;
+    border: 2px solid #C3BFD3;;
     border-radius: 5px;
-    padding: 3px;
+    padding: 5px;
+    color: teal;
+    font-weight: 600;
+    position: relative;
   }
   
   .show-active {

@@ -99,7 +99,7 @@ const ExportCode = () => {
   }
 
   return (
-    <div className='container'>
+    <div>
       <button onClick={handleDownload} className='export'>Export</button>
       {
         show && (

@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast"
 function App() {
   return (
     <div className="App">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
       <HomeScreen />
     </div>
   );

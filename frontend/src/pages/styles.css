@@ -72,22 +72,22 @@ textarea {
 	justify-content: space-around;
 	padding: 5px;
 	border-radius: 5px;
-	background-color: teal;
+	background-color: gray;
 }
 
 .select-language {
 	display: flex;
-	align-items: center;
 }
 
 .common {
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: 8px;
 	font-size: 14px;
 }
 
 .common h4 {
+	text-align: left;
 	color: teal;
 }
 
@@ -107,5 +107,5 @@ textarea {
 .export-screenshot {
 	display: flex;
 	align-items: center;
-	gap: 5px;
+	gap: 8px;
 }

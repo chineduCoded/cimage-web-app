@@ -13,7 +13,6 @@ const LanguageSelect = ({ onSelectChange }) => {
 
   return (
     <div>
-      <h4>Language</h4>
       <select
         name='languages'
         value={selectedLanguage}
