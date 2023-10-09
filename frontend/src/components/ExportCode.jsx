@@ -99,7 +99,7 @@ const ExportCode = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       <button onClick={handleDownload} className='export'>Export</button>
       {
         show && (
@@ -121,9 +121,9 @@ const ExportCode = () => {
       </div>
         )
       }
-        <button onClick={handleShow} className={`show ${show ? 'show-active' : ''}`}>
-          <IoIosArrowUp />
-        </button>
+      <button onClick={handleShow} className={`show ${show ? 'show-active' : ''}`}>
+        <IoIosArrowUp />
+      </button>
     </div>
   );
 };

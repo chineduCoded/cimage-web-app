@@ -56,8 +56,8 @@ input:checked + .slider:before {
 
 .share {
   position: absolute;
-  top: 430px;
-  right: 305px;
+  bottom: 40px;
+  right: 110px;
   background-color: #fff;
   border: 2px solid #ccc;
   padding: 10px;
